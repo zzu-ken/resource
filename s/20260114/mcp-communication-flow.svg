@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <style>
+      .title { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; fill: #333; }
+      .label { font-family: Arial, sans-serif; font-size: 14px; fill: #333; }
+      .small-label { font-family: Arial, sans-serif; font-size: 12px; fill: #666; }
+      .box { fill: #e3f2fd; stroke: #1976d2; stroke-width: 2; }
+      .host-box { fill: #fff3e0; stroke: #f57c00; stroke-width: 2; }
+      .client-box { fill: #e8f5e9; stroke: #388e3c; stroke-width: 2; }
+      .server-box { fill: #f3e5f5; stroke: #7b1fa2; stroke-width: 2; }
+      .arrow { stroke: #1976d2; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+      .request-arrow { stroke: #1976d2; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+      .response-arrow { stroke: #388e3c; stroke-width: 2; fill: none; marker-end: url(#arrowhead-green); stroke-dasharray: 5,5; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#1976d2" />
+    </marker>
+    <marker id="arrowhead-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#388e3c" />
+    </marker>
+  </defs>
+  
+  <!-- Title -->
+  <text x="400" y="30" text-anchor="middle" class="title">MCP 通信流程图</text>
+  
+  <!-- MCP Host -->
+  <rect x="50" y="80" width="200" height="100" rx="10" class="host-box"/>
+  <text x="150" y="115" text-anchor="middle" class="label" font-weight="bold">MCP Host</text>
+  <text x="150" y="140" text-anchor="middle" class="small-label">LLM 应用程序</text>
+  <text x="150" y="160" text-anchor="middle" class="small-label">(Claude Desktop, IDE)</text>
+  
+  <!-- MCP Client -->
+  <rect x="300" y="80" width="200" height="100" rx="10" class="client-box"/>
+  <text x="400" y="115" text-anchor="middle" class="label" font-weight="bold">MCP Client</text>
+  <text x="400" y="140" text-anchor="middle" class="small-label">协议客户端</text>
+  <text x="400" y="160" text-anchor="middle" class="small-label">JSON-RPC 2.0</text>
+  
+  <!-- MCP Server -->
+  <rect x="550" y="80" width="200" height="100" rx="10" class="server-box"/>
+  <text x="650" y="115" text-anchor="middle" class="label" font-weight="bold">MCP Server</text>
+  <text x="650" y="140" text-anchor="middle" class="small-label">提供工具和资源</text>
+  <text x="650" y="160" text-anchor="middle" class="small-label">处理请求</text>
+  
+  <!-- Arrows: Host to Client -->
+  <line x1="250" y1="130" x2="300" y2="130" class="request-arrow"/>
+  <text x="275" y="125" text-anchor="middle" class="small-label">请求</text>
+  
+  <!-- Arrows: Client to Server -->
+  <line x1="500" y1="130" x2="550" y2="130" class="request-arrow"/>
+  <text x="525" y="125" text-anchor="middle" class="small-label">JSON-RPC</text>
+  
+  <!-- Response arrows -->
+  <line x1="550" y1="150" x2="500" y2="150" class="response-arrow"/>
+  <text x="525" y="145" text-anchor="middle" class="small-label">响应</text>
+  
+  <line x1="300" y1="150" x2="250" y2="150" class="response-arrow"/>
+  <text x="275" y="145" text-anchor="middle" class="small-label">结果</text>
+  
+  <!-- Communication details -->
+  <rect x="50" y="220" width="700" height="150" rx="10" class="box"/>
+  <text x="400" y="245" text-anchor="middle" class="label" font-weight="bold">通信方式</text>
+  
+  <text x="100" y="275" class="label">• 协议: JSON-RPC 2.0</text>
+  <text x="100" y="300" class="label">• 传输: stdio 或 HTTP</text>
+  <text x="100" y="325" class="label">• 模式: 双向通信（请求/响应）</text>
+  
+  <text x="450" y="275" class="label">• 工具调用: tools/call</text>
+  <text x="450" y="300" class="label">• 资源访问: resources/read</text>
+  <text x="450" y="325" class="label">• 提示获取: prompts/get</text>
+  
+  <!-- Data flow example -->
+  <rect x="50" y="400" width="700" height="150" rx="10" class="box"/>
+  <text x="400" y="425" text-anchor="middle" class="label" font-weight="bold">典型交互流程</text>
+  
+  <text x="100" y="455" class="small-label">1. Host 发起请求 → Client 接收</text>
+  <text x="100" y="480" class="small-label">2. Client 封装为 JSON-RPC → Server</text>
+  <text x="100" y="505" class="small-label">3. Server 处理请求 → 返回结果</text>
+  <text x="100" y="530" class="small-label">4. Client 转发响应 → Host 接收</text>
+  
+  <text x="450" y="455" class="small-label">示例: 调用工具 "add"</text>
+  <text x="450" y="480" class="small-label">请求: {"method": "tools/call", "params": {...}}</text>
+  <text x="450" y="505" class="small-label">响应: {"result": {"content": [...]}}</text>
+  <text x="450" y="530" class="small-label">Host 获得计算结果</text>
+</svg>

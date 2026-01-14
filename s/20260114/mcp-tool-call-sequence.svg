@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="700" viewBox="0 0 900 700">
+  <defs>
+    <style>
+      .title { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; fill: #333; }
+      .label { font-family: Arial, sans-serif; font-size: 13px; fill: #333; }
+      .small-label { font-family: Arial, sans-serif; font-size: 11px; fill: #666; }
+      .actor-box { fill: #e3f2fd; stroke: #1976d2; stroke-width: 2; }
+      .lifeline { stroke: #999; stroke-width: 1; stroke-dasharray: 3,3; }
+      .request-line { stroke: #1976d2; stroke-width: 2; }
+      .response-line { stroke: #388e3c; stroke-width: 2; stroke-dasharray: 5,5; }
+      .activation { fill: #bbdefb; stroke: #1976d2; stroke-width: 1; opacity: 0.5; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#1976d2" />
+    </marker>
+    <marker id="arrowhead-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#388e3c" />
+    </marker>
+  </defs>
+  
+  <!-- Title -->
+  <text x="450" y="30" text-anchor="middle" class="title">MCP 工具调用时序图</text>
+  
+  <!-- Actors -->
+  <rect x="50" y="70" width="150" height="50" rx="5" class="actor-box"/>
+  <text x="125" y="95" text-anchor="middle" class="label" font-weight="bold">MCP Host</text>
+  <text x="125" y="110" text-anchor="middle" class="small-label">(LLM App)</text>
+  
+  <rect x="250" y="70" width="150" height="50" rx="5" class="actor-box"/>
+  <text x="325" y="95" text-anchor="middle" class="label" font-weight="bold">MCP Client</text>
+  <text x="325" y="110" text-anchor="middle" class="small-label">(Protocol)</text>
+  
+  <rect x="450" y="70" width="150" height="50" rx="5" class="actor-box"/>
+  <text x="525" y="95" text-anchor="middle" class="label" font-weight="bold">MCP Server</text>
+  <text x="525" y="110" text-anchor="middle" class="small-label">(Tools)</text>
+  
+  <rect x="650" y="70" width="150" height="50" rx="5" class="actor-box"/>
+  <text x="725" y="95" text-anchor="middle" class="label" font-weight="bold">External</text>
+  <text x="725" y="110" text-anchor="middle" class="small-label">(System)</text>
+  
+  <!-- Lifelines -->
+  <line x1="125" y1="120" x2="125" y2="650" class="lifeline"/>
+  <line x1="325" y1="120" x2="325" y2="650" class="lifeline"/>
+  <line x1="525" y1="120" x2="525" y2="650" class="lifeline"/>
+  <line x1="725" y1="120" x2="725" y2="650" class="lifeline"/>
+  
+  <!-- Step 1: Initialize -->
+  <text x="450" y="160" text-anchor="middle" class="label" font-weight="bold" fill="#666">初始化连接</text>
+  <line x1="125" y1="180" x2="325" y2="180" class="request-line" marker-end="url(#arrowhead)"/>
+  <text x="200" y="175" class="small-label">initialize</text>
+  <rect x="300" y="170" width="50" height="20" class="activation"/>
+  
+  <line x1="325" y1="200" x2="525" y2="200" class="request-line" marker-end="url(#arrowhead)"/>
+  <text x="400" y="195" class="small-label">initialize</text>
+  <rect x="500" y="190" width="50" height="20" class="activation"/>
+  
+  <line x1="525" y1="220" x2="325" y2="220" class="response-line" marker-end="url(#arrowhead-green)"/>
+  <text x="400" y="215" class="small-label">capabilities</text>
+  
+  <line x1="325" y1="240" x2="125" y2="240" class="response-line" marker-end="url(#arrowhead-green)"/>
+  <text x="200" y="235" class="small-label">ready</text>
+  
+  <!-- Step 2: List Tools -->
+  <text x="450" y="280" text-anchor="middle" class="label" font-weight="bold" fill="#666">获取工具列表</text>
+  <line x1="125" y1="300" x2="325" y2="300" class="request-line" marker-end="url(#arrowhead)"/>
+  <text x="200" y="295" class="small-label">tools/list</text>
+  <rect x="300" y="290" width="50" height="20" class="activation"/>
+  
+  <line x1="325" y1="320" x2="525" y2="320" class="request-line" marker-end="url(#arrowhead)"/>
+  <text x="400" y="315" class="small-label">tools/list</text>
+  <rect x="500" y="310" width="50" height="20" class="activation"/>
+  
+  <line x1="525" y1="340" x2="325" y2="340" class="response-line" marker-end="url(#arrowhead-green)"/>
+  <text x="400" y="335" class="small-label">[{name, description}]</text>
+  
+  <line x1="325" y1="360" x2="125" y2="360" class="response-line" marker-end="url(#arrowhead-green)"/>
+  <text x="200" y="355" class="small-label">tools list</text>
+  
+  <!-- Step 3: Call Tool -->
+  <text x="450" y="400" text-anchor="middle" class="label" font-weight="bold" fill="#666">调用工具</text>
+  <line x1="125" y1="420" x2="325" y2="420" class="request-line" marker-end="url(#arrowhead)"/>
+  <text x="200" y="415" class="small-label">tools/call</text>
+  <text x="200" y="430" class="small-label">add(5, 3)</text>
+  <rect x="300" y="410" width="50" height="30" class="activation"/>
+  
+  <line x1="325" y1="450" x2="525" y2="450" class="request-line" marker-end="url(#arrowhead)"/>
+  <text x="400" y="445" class="small-label">tools/call</text>
+  <text x="400" y="460" class="small-label">{"name": "add", "args": {...}}</text>
+  <rect x="500" y="440" width="50" height="30" class="activation"/>
+  
+  <!-- External system call -->
+  <line x1="525" y1="480" x2="725" y2="480" class="request-line" marker-end="url(#arrowhead)"/>
+  <text x="600" y="475" class="small-label">执行函数</text>
+  <rect x="700" y="470" width="50" height="20" class="activation"/>
+  
+  <line x1="725" y1="500" x2="525" y2="500" class="response-line" marker-end="url(#arrowhead-green)"/>
+  <text x="600" y="495" class="small-label">result: 8</text>
+  
+  <!-- Response -->
+  <line x1="525" y1="520" x2="325" y2="520" class="response-line" marker-end="url(#arrowhead-green)"/>
+  <text x="400" y="515" class="small-label">{"content": [{"text": "8"}]}</text>
+  
+  <line x1="325" y1="540" x2="125" y2="540" class="response-line" marker-end="url(#arrowhead-green)"/>
+  <text x="200" y="535" class="small-label">result: 8</text>
+  
+  <!-- Notes -->
+  <rect x="50" y="580" width="800" height="60" rx="5" fill="#fff9c4" stroke="#f9a825" stroke-width="1"/>
+  <text x="450" y="600" text-anchor="middle" class="label" font-weight="bold">说明</text>
+  <text x="100" y="625" class="small-label">• 所有通信基于 JSON-RPC 2.0 协议</text>
+  <text x="100" y="640" class="small-label">• 支持同步和异步调用</text>
+  <text x="500" y="625" class="small-label">• 错误通过 error 字段返回</text>
+  <text x="500" y="640" class="small-label">• 支持批量请求和通知</text>
+</svg>
